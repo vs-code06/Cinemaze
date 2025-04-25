@@ -3,19 +3,17 @@ import { useState } from 'react';
 import { FaUserCircle, FaSearch, FaSignInAlt, FaSignOutAlt, FaFilm } from 'react-icons/fa';
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Toggle this based on auth
+  const [isLoggedIn, setIsLoggedIn] = useState(true); 
 
   const navLinks = ['Home', 'Movies', 'Series', 'My List', 'History'];
 
   return (
     <nav className="flex items-center justify-between px-6 py-3 bg-black text-white shadow-md border-b border-gray-800">
-      {/* Logo */}
       <div className="flex items-center space-x-2">
         <FaFilm className="text-pink-500 text-2xl" />
-        <span className="text-pink-500 text-xl font-bold">Cinemaze</span>
+        <span className="text-xl font-bold bg-gradient-to-r from-pink-500 via-purple-400 to-purple-500 bg-clip-text text-transparent">Cinemaze</span>
       </div>
 
-      {/* Nav Links */}
       <ul className="flex space-x-6">
         {navLinks.map((link) => (
           <li key={link}>
@@ -29,9 +27,7 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Search + Profile/Login */}
       <div className="flex items-center space-x-4">
-        {/* Search Bar */}
         <div className="relative">
           <input
             type="text"
@@ -43,13 +39,11 @@ export default function Navbar() {
 
         {isLoggedIn ? (
           <>
-            {/* Profile */}
             <div className="flex items-center space-x-2">
               <FaUserCircle className="text-purple-500 text-2xl" />
               <span className="text-white">John Doe</span>
             </div>
-            {/* Logout Button */}
-            <button className=" hover:bg-cyan-400 transition text-white font-semibold px-4 py-1 rounded-lg flex items-center space-x-2">
+            <button className=" hover:bg-cyan-400 transition text-white font-semibold px-4 py-1 rounded-lg flex items-center space-x-2 cursor-pointer">
               <FaSignOutAlt />
               <span>Logout</span>
             </button>
