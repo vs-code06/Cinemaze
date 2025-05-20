@@ -69,7 +69,7 @@ export default function Home() {
         ))}
       </div>
 
-      <div className='mt-10 '>
+      <div className='mt-10 mb-10'>
         <h2 className="text-2xl font-bold text-purple-500 mb-6">Polpular Picks</h2>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

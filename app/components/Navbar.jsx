@@ -9,10 +9,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Movies', path: '/movies' },
+    { name: 'Movies', path: '/Movies' },
     { name: 'Series', path: '/series' },
     { name: 'My List', path: '/my-list' },
-    { name: 'History', path: '/history' },
+    { name: 'History', path: '/History' },
   ];
 
   return (
