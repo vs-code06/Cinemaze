@@ -56,14 +56,12 @@ export default function Movies() {
               key={movie.id}
               className="relative group rounded-lg overflow-hidden h-[22rem] shadow-lg"
             >
-              {/* Always-visible image */}
               <img
                 src={movie.poster}
                 alt={movie.title}
                 className="w-full h-80 object-cover"
               />
 
-              {/* Overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
                 <div className="mb-2">
                   <h3 className="text-white font-bold text-lg">{movie.title}</h3>
