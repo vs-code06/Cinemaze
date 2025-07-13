@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { FaUserCircle, FaSearch, FaSignInAlt, FaSignOutAlt, FaFilm, FaBars } from 'react-icons/fa';
+import { FaUserCircle, FaSignInAlt, FaSignOutAlt, FaFilm, FaBars } from 'react-icons/fa';
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -37,17 +37,6 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-
-      <div className="flex-1 mx-4 max-w-xs">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full bg-gray-800 text-white rounded-full pl-10 pr-4 py-1 text-sm outline-none focus:ring-2 focus:ring-cyan-400"
-          />
-          <FaSearch className="absolute left-3 top-2 text-gray-400 text-sm" />
-        </div>
-      </div>
 
       <div className="hidden md:flex items-center space-x-4">
         {isLoggedIn ? (
