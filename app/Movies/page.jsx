@@ -1,48 +1,28 @@
 'use client';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const dummyMovies = [
-  {
-    id: 1,
-    title: "Inception",
-    poster: "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg",
-    releaseDate: "2010-07-16",
-    rating: 8.8,
-    genre: "Sci-Fi",
-    description: "A thief who steals corporate secrets through dream-sharing technology is given the task of planting an idea into a target's subconscious."
-  },
-  {
-    id: 2,
-    title: "Interstellar",
-    poster: "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
-    releaseDate: "2014-11-07",
-    rating: 8.6,
-    genre: "Adventure",
-    description: "A group of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
-  },
-  {
-    id: 3,
-    title: "The Dark Knight",
-    poster: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    releaseDate: "2008-07-18",
-    rating: 9.0,
-    genre: "Action",
-    description: "Batman sets out to dismantle the remaining criminal organizations that plague the streets but soon finds himself prey to a reign of chaos."
-  },
-  {
-    id: 4,
-    title: "Tenet",
-    poster: "https://image.tmdb.org/t/p/w500/k68nPLbIST6NP96JmTxmZijEvCA.jpg",
-    releaseDate: "2020-08-22",
-    rating: 7.5,
-    genre: "Thriller",
-    description: "Armed with only one word—Tenet—and fighting for the survival of the world, a protagonist journeys through a twilight world of international espionage."
-  },
-];
+const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0'; // Replace this with your TMDb API key
+const TMDB_API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`;
 
 export default function Movies() {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch(TMDB_API_URL);
+        const data = await response.json();
+        setMovies(data.results); // results is the array of movies
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
   return (
     <div className="bg-black min-h-screen text-white">
       <Navbar />
@@ -51,13 +31,13 @@ export default function Movies() {
         <h1 className="text-3xl font-bold mb-10 text-center">Movies</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-          {dummyMovies.map((movie) => (
+          {movies.map((movie) => (
             <div
               key={movie.id}
               className="relative group rounded-lg overflow-hidden h-[22rem] shadow-lg"
             >
               <img
-                src={movie.poster}
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="w-full h-80 object-cover"
               />
@@ -66,15 +46,15 @@ export default function Movies() {
                 <div className="mb-2">
                   <h3 className="text-white font-bold text-lg">{movie.title}</h3>
                   <div className="flex items-center gap-2 text-sm text-gray-300">
-                    <span className="text-pink-400">⭐ {movie.rating}</span>
-                    <span>{movie.releaseDate.split("-")[0]}</span>
+                    <span className="text-pink-400">⭐ {movie.vote_average.toFixed(1)}</span>
+                    <span>{movie.release_date?.split("-")[0]}</span>
                     <span>•</span>
-                    <span className="text-pink-400">{movie.genre}</span>
+                    <span className="text-pink-400">Popular</span>
                   </div>
                 </div>
 
                 <p className="text-gray-300 text-sm mb-4 line-clamp-2">
-                  {movie.description}
+                  {movie.overview}
                 </p>
 
                 <button className="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-md w-full transition-colors">

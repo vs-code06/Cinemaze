@@ -55,7 +55,7 @@ export default function Home() {
   const MovieCard = ({ movie }) => (
     <div
       key={movie.id}
-      className="relative group min-w-[180px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[240px] h-96 rounded-lg overflow-hidden bg-gray-900 bg-cover bg-center transition-all duration-300 mr-4"
+      className="relative group min-w-[180px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[240px] h-80 rounded-lg overflow-hidden bg-gray-900 bg-cover bg-center transition-all duration-300 mr-4"
       style={{ backgroundImage: `url(${movie.image})` }}
     >
       {/* Title - default state */}
