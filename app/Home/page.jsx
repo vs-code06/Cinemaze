@@ -1,7 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import MovieCard from "../components/MovieCard";
 
 const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0';
@@ -12,6 +10,7 @@ export default function Home() {
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
+  
 
   // Fetch Hero Movies
   useEffect(() => {
