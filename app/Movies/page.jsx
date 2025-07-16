@@ -4,26 +4,34 @@ import { FaSearch } from "react-icons/fa";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0'; 
-const TMDB_API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`;
+const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0';
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+
 
   useEffect(() => {
     const fetchMovies = async () => {
+      const TMDB_API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`;
+  
       try {
         const response = await fetch(TMDB_API_URL);
         const data = await response.json();
-        setMovies(data.results);
+        setMovies(prev => {
+          const existingIds = new Set(prev.map(movie => movie.id));
+          const newUniqueMovies = data.results.filter(movie => !existingIds.has(movie.id));
+          return [...prev, ...newUniqueMovies];
+        });
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
     };
-
     fetchMovies();
-  }, []);
+  }, [page]);
+  
+  
 
   // Filter movies based on search query
   const filteredMovies = movies.filter((movie) =>
@@ -87,7 +95,14 @@ export default function Movies() {
             </div>
           ))}
         </div>
+          <button
+          onClick={() => setPage(prev => prev + 1)}
+          className="bg-gray-800 text-white px-4 py-2 mt-8 rounded-md"
+        >
+          Load More
+        </button>
       </div>
+      
 
       <Footer />
     </div>

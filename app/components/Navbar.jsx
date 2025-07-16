@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FaUserCircle, FaSignInAlt, FaSignOutAlt, FaFilm, FaBars } from 'react-icons/fa';
-import { useAuth } from ' @/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 
 export default function Navbar() {

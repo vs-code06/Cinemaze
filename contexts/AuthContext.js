@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { signup, login } from '../utils/auth';
 
 const AuthContext = createContext();
@@ -14,11 +14,22 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = async (email, password) => {
     const loggedInUser = await login(email, password);
+    localStorage.setItem('user', JSON.stringify(loggedInUser));
     setUser(loggedInUser);
   };
 
-  const logout = () => setUser(null);
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+  
   return (
     <AuthContext.Provider value={{ user, handleSignup, handleLogin, logout }}>
       {children}
