@@ -9,13 +9,19 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Movies', path: '/Movies' },
-    { name: 'Series', path: '/series' },
-    { name: 'My List', path: '/my-list' },
-    { name: 'History', path: '/History' },
-  ];
+  const navLinks = user
+  ? [
+      { name: 'Home', path: '/' },
+      { name: 'Movies', path: '/Movies' },
+      { name: 'Series', path: '/Series' },
+      { name: 'My List', path: '/my-list' },
+      { name: 'History', path: '/History' },
+    ]
+  : [
+      { name: 'Home', path: '/' },
+      { name: 'Movies', path: '/Movies' },
+      { name: 'Series', path: 'Series' },
+    ];
 
   return (
     <nav className="flex items-center justify-between px-6 py-3 bg-black text-white shadow-md border-b border-gray-800 relative">
@@ -48,7 +54,7 @@ export default function Navbar() {
           <>
             <div className="flex items-center space-x-2">
               <FaUserCircle className="text-purple-500 text-2xl" />
-              <span className="text-white">{user?.name ?? user?.email}</span>
+              <span className="text-white">{user?.name}</span>
             </div>
             <button
               onClick={logout}
@@ -102,7 +108,7 @@ export default function Navbar() {
             <>
               <div className="flex items-center justify-center space-x-2 mb-2">
                 <FaUserCircle className="text-purple-500 text-2xl" />
-                <span className="text-white">{user?.email}</span>
+                <span className="text-white">{user?.name}</span>
               </div>
               <button
                 onClick={logout}
