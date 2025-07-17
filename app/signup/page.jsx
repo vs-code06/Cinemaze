@@ -14,35 +14,69 @@ export default function SignupPage() {
     e.preventDefault();
     try {
       await handleSignup(name, email, password);
-      router.push('/'); // ✅ Redirect to home on success
+      router.push('/');
     } catch (err) {
       alert(err.message);
     }
   };
 
   return (
-    <form onSubmit={submit} className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl mb-4">Sign Up</h1>
-      <input
-        className="w-full p-2 border mb-2"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        className="w-full p-2 border mb-2"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        className="w-full p-2 border mb-2"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button className="bg-green-500 text-white px-4 py-2">Sign Up</button>
-    </form>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center px-4">
+      <form
+        onSubmit={submit}
+        className="bg-white shadow-2xl rounded-lg w-full max-w-sm p-8 space-y-6"
+      >
+        <h1 className="text-2xl font-bold text-gray-800 text-center">Create an Account</h1>
+
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Full Name</label>
+          <input
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+            placeholder="Jane Doe"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Email</label>
+          <input
+            type="email"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Password</label>
+          <input
+            type="password"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition"
+        >
+          Sign Up
+        </button>
+
+        <p className="text-center text-sm text-gray-500">
+          Already have an account?{' '}
+          <a href="/login" className="text-blue-600 hover:underline cursor-pointer">
+            Log in
+          </a>
+        </p>
+      </form>
+    </div>
   );
 }

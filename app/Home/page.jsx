@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import MovieCard from "../components/MovieCard";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import WatchNowButton from '../components/WatchNowButton';
+
 
 const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0';
 
@@ -129,9 +131,15 @@ export default function Home() {
               {currentHero.overview}
             </p>
             <div className="flex gap-4">
-              <button className="bg-pink-500 hover:bg-pink-600 text-white py-2 px-5 rounded-md text-sm font-semibold">
-                ▶ Watch Now
-              </button>
+            <WatchNowButton movie={{
+              id: currentHero.id,
+              title: currentHero.title,
+              genre: 'movie',
+              rating: `${currentHero.vote_average.toFixed(1)}/10`,
+              year: currentHero.release_date?.split('-')[0],
+              description: currentHero.overview,
+              image: `https://image.tmdb.org/t/p/w1280${currentHero.backdrop_path}`
+            }} />
               <button className="border border-white text-white hover:bg-white hover:text-black py-2 px-5 rounded-md text-sm font-semibold">
                 More Info
               </button>

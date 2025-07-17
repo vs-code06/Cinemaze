@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext'; // ✅ Make sure this works
 import { supabase } from '@/supabaseClient';
+import ViewDetailsButton from './ViewDetailsButton';
 
 export default function MovieCard({ movie }) {
   const [showStatusMenu, setShowStatusMenu] = useState(false);
@@ -57,9 +58,7 @@ export default function MovieCard({ movie }) {
         </div>
         <p className="text-gray-300 text-sm mb-4 line-clamp-2">{movie.description || movie.overview}</p>
         <div className="flex gap-2 relative">
-          <button className="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-md flex-1 transition-colors">
-            View Details
-          </button>
+          <ViewDetailsButton movie={movie} />
           <div className="relative">
             <button
               onClick={() => setShowStatusMenu(!showStatusMenu)}

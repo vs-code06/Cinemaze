@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ViewDetailsButton from "../components/ViewDetailsButton";
 
 const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0';
 
@@ -88,9 +89,17 @@ export default function Movies() {
                   {movie.overview}
                 </p>
 
-                <button className="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-md w-full transition-colors">
-                  View Details
-                </button>
+                <ViewDetailsButton
+                  movie={{
+                    id: movie.id,
+                    title: movie.title,
+                    rating: `${movie.vote_average.toFixed(1)}/10`,
+                    year: movie.release_date?.split("-")[0],
+                    genre: "Popular",
+                    description: movie.overview,
+                    image: `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`,
+                  }}
+                />
               </div>
             </div>
           ))}

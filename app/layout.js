@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { MovieModalProvider } from "@/contexts/MovieModalContext";
+import GlobalMovieModal from "./components/GlobalMovieModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +24,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
-          {children}
+          <MovieModalProvider>
+            {children}
+            <GlobalMovieModal />
+          </MovieModalProvider>
         </AuthProvider>
       </body>
     </html>
