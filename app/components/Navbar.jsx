@@ -20,7 +20,7 @@ export default function Navbar() {
   : [
       { name: 'Home', path: '/' },
       { name: 'Movies', path: '/Movies' },
-      { name: 'Series', path: 'Series' },
+      { name: 'Series', path: '/Series' },
     ];
 
   return (
