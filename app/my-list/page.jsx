@@ -37,6 +37,16 @@ export default function MyListPage() {
   const filteredMovies =
     filter === 'All' ? myList : myList.filter((movie) => movie.status === filter);
 
+  const removeFromList = async (id) => {
+    const { error } = await supabase.from('user_movie_list').delete().eq('id', id);
+    if (!error) {
+      setMyList(myList.filter((movie) => movie.id !== id));
+    } else {
+      console.error('Error deleting movie:', error);
+    }
+  };
+    
+
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       <Navbar />
@@ -65,20 +75,33 @@ export default function MyListPage() {
           {filteredMovies.map((movie) => (
             <div
               key={movie.id}
-              className="relative group rounded-lg overflow-hidden h-[22rem] shadow-lg bg-gray-800"
+              className="relative group rounded-lg overflow-hidden h-[20rem] shadow-lg bg-gray-800"
             >
+              {/* Poster */}
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
-                className="w-full h-80 object-cover"
+                className="w-full h-full object-cover"
               />
+            
+              {/* Gradient Hover Content */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
                 <h3 className="text-white font-bold text-lg mb-2">{movie.title}</h3>
-                <span className="text-sm text-gray-300">{movie.status}</span>
+            
+                {/* Flex Row: Status + Remove */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-300">{movie.status}</span>
+                  <button
+                    onClick={() => removeFromList(movie.id)}
+                    className="bg-gray-700 hover:bg-gray-600 text-white text-sm px-4 py-1 rounded-md opacity-100 group-hover:opacity-100 transition-opacity duration-300"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
         {filteredMovies.length === 0 && (
           <p className="text-center text-gray-400 mt-10">

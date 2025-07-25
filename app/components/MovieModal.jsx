@@ -9,6 +9,33 @@ export default function MovieModal({ movie, isOpen, onClose }) {
   const { user } = useAuth();
   const [userRating, setUserRating] = useState(0);
   const [isLoadingRating, setIsLoadingRating] = useState(true);
+  const [cast, setCast] = useState([]);
+  const [isLoadingCast, setIsLoadingCast] = useState(true); 
+
+  // console.log(movie)
+
+  useEffect(() => {
+    async function fetchCast() {
+      if (!movie || !isOpen) return;
+      setIsLoadingCast(true);
+      const type = movie.genre?.toLowerCase().includes('tv') ? 'tv' : 'movie';
+  
+      try {
+        const res = await fetch(
+          `https://api.themoviedb.org/3/${type}/${movie.id}/credits?api_key=77a156d00aef40cfc947354bf3acd1f0`
+        );
+        const data = await res.json();
+        setCast(Array.isArray(data.cast) ? data.cast : []);
+      } catch (err) {
+        console.error('Error fetching cast:', err);
+        setCast([]);
+      } finally {
+        setIsLoadingCast(false);
+      }
+    }
+    fetchCast();
+  }, [movie, isOpen]);
+   
 
   // ✅ Fetch user's existing rating
   useEffect(() => {
@@ -88,6 +115,30 @@ export default function MovieModal({ movie, isOpen, onClose }) {
                 <span>{movie.genre || 'Drama'}</span>
               </div>
               <p className="text-gray-300 text-sm">{movie.description || movie.overview}</p>
+
+              {Array.isArray(cast) && cast.length > 0 && (
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold text-white mb-2">Cast</h3>
+                  <div className="flex overflow-x-auto gap-4 pb-2 scrollbar-thin scrollbar-thumb-gray-600">
+                    {cast.map((actor) => (
+                      <div key={actor.cast_id || actor.id} className="w-24 flex-shrink-0 text-center">
+                        <img
+                          src={
+                            actor.profile_path
+                              ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                              : '/default-avatar.png'
+                          }
+                          alt={actor.name}
+                          className="w-24 h-28 object-cover rounded"
+                        />
+                        <p className="text-xs mt-1 text-gray-300 truncate">{actor.name}</p>
+                        <p className="text-[10px] text-gray-500 italic truncate">{actor.character}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
 
               {/* Rating UI */}
               <div className="flex items-center gap-1 mt-4">

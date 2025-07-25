@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ViewDetailsButton from "../components/ViewDetailsButton";
 
-const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0';
+const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
 export default function Series() {
   const [series, setSeries] = useState([]);

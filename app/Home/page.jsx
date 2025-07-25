@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import WatchNowButton from '../components/WatchNowButton';
 
 
-const TMDB_API_KEY = '77a156d00aef40cfc947354bf3acd1f0';
+const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
 export default function Home() {
   const [heroMovies, setHeroMovies] = useState([]);
@@ -105,7 +105,6 @@ export default function Home() {
   }, []);
 
   const currentHero = heroMovies[currentHeroIndex];
-  console.log(heroMovies)
 
   return (
     <>
@@ -190,7 +189,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-
       </div>
       <Footer/>
     </>
