@@ -11,12 +11,28 @@ export default function Movies() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [genres, setGenres] = useState([]);             // <--- NEW
+  const [selectedGenre, setSelectedGenre] = useState(""); // <--- NEW
 
+  // Fetch genres from TMDB API
+  useEffect(() => {
+    const fetchGenres = async () => {
+      const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${TMDB_API_KEY}&language=en-US`;
+      try {
+        const response = await fetch(GENRE_API_URL);
+        const data = await response.json();
+        setGenres(data.genres); // Array of {id, name}
+      } catch (error) {
+        console.error("Error fetching genres:", error);
+      }
+    };
+    fetchGenres();
+  }, []);
 
+  // Fetch movies from TMDB API
   useEffect(() => {
     const fetchMovies = async () => {
       const TMDB_API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`;
-  
       try {
         const response = await fetch(TMDB_API_URL);
         const data = await response.json();
@@ -31,33 +47,48 @@ export default function Movies() {
     };
     fetchMovies();
   }, [page]);
-  
-  
 
-  // Filter movies based on search query
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  console.log(movies)
+  // Filter movies based on search query AND genre
+  const filteredMovies = movies.filter((movie) => {
+    const matchesQuery = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesGenre =
+      !selectedGenre || movie.genre_ids?.includes(Number(selectedGenre));
+    return matchesQuery && matchesGenre;
+  });
 
   return (
     <div className="bg-black min-h-screen text-white">
       <Navbar />
 
       <div className="container mx-auto px-4 py-20 pt-24">
-        {/* Title + Search Bar */}
+        {/* Title + Filters Bar */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
           <h1 className="text-3xl font-bold mb-4 md:mb-0 text-left">Movies</h1>
           
-          <div className="relative w-full md:w-72">
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-gray-800 text-white rounded-none pl-10 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-400"
-            />
-            <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
+          <div className="flex gap-2 w-full md:w-auto">
+            {/* Genre Select Dropdown */}
+            <select
+              className="bg-gray-800 text-white rounded-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-400"
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+            >
+              <option value="">All Genres</option>
+              {genres.map(genre => (
+                <option key={genre.id} value={genre.id}>{genre.name}</option>
+              ))}
+            </select>
+
+            {/* Search Bar */}
+            <div className="relative w-full md:w-72">
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-gray-800 text-white rounded-none pl-10 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-400"
+              />
+              <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
+            </div>
           </div>
         </div>
 
@@ -104,15 +135,14 @@ export default function Movies() {
             </div>
           ))}
         </div>
-          <button
+
+        <button
           onClick={() => setPage(prev => prev + 1)}
           className="bg-gray-800 text-white px-4 py-2 mt-8 rounded-md"
         >
           Load More
         </button>
       </div>
-      
-
       <Footer />
     </div>
   );
