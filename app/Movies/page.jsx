@@ -11,8 +11,8 @@ export default function Movies() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [genres, setGenres] = useState([]);             // <--- NEW
-  const [selectedGenre, setSelectedGenre] = useState(""); // <--- NEW
+  const [genres, setGenres] = useState([]);            
+  const [selectedGenre, setSelectedGenre] = useState(""); 
 
   // Fetch genres from TMDB API
   useEffect(() => {

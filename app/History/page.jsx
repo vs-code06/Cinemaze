@@ -77,7 +77,6 @@ export default function History() {
                 className="relative group rounded-lg overflow-hidden h-80  bg-cover bg-center transition-all duration-300"
                 style={{ backgroundImage: `url(${movie.poster_url})` }}
               >
-                {/* Default state - just title */}
                 <div className="absolute inset-0  bg-opacity-40 flex items-end justify-start p-4 group-hover:opacity-0 transition-opacity duration-300">
                   <h3 className="text-white font-bold text-lg">{movie.title}</h3>
                 </div>

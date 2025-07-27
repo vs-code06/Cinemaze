@@ -31,8 +31,7 @@ export default function WatchNowButton({ movie }) {
     if (error) {
       console.error("Failed to add to history:", error);
     } else {
-      console.log("Watch history updated!");
-    //   router.push(`/watch/${movie.id}`); 
+      alert("Watch history updated!");
     }
   };
 

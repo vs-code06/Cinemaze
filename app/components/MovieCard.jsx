@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext'; // ✅ Make sure this works
+import { useAuth } from '@/contexts/AuthContext'; 
 import { supabase } from '@/supabaseClient';
 import ViewDetailsButton from './ViewDetailsButton';
 
 export default function MovieCard({ movie }) {
   const [showStatusMenu, setShowStatusMenu] = useState(false);
-  const { user } = useAuth(); // ✅ must be logged in
+  const { user } = useAuth();
 
   const handleStatusSelect = async (status) => {
     if (!user) {
@@ -21,7 +21,7 @@ export default function MovieCard({ movie }) {
           user_id: user.id,
           movie_id: movie.id,
           title: movie.title,
-          poster_path: movie.poster_path || movie.image, // fallback if image prop
+          poster_path: movie.poster_path || movie.image, 
           status,
         },
       ]);

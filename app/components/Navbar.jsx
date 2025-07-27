@@ -27,12 +27,12 @@ export default function Navbar() {
     <nav className="flex items-center justify-between px-6 py-3 bg-black text-white shadow-md border-b border-gray-800 relative">
       
       {/* Logo */}
-      <div className="flex items-center space-x-2">
+      <Link href="/" className="flex items-center space-x-2 cursor-pointer">
         <FaFilm className="text-pink-500 text-2xl" />
         <span className="text-xl font-bold bg-gradient-to-r from-pink-500 via-purple-400 to-purple-500 bg-clip-text text-transparent">
           Cinemaze
         </span>
-      </div>
+      </Link>
 
       {/* Desktop Nav Links */}
       <ul className="hidden md:flex space-x-6">
