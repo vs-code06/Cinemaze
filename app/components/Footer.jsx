@@ -3,6 +3,14 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { MdOutlineOndemandVideo } from 'react-icons/md';
 
+const connectedLinks = [
+  'Movies',
+  'Series',
+  'My List',
+  'Watch History',
+];
+
+// Original structure
 const links = [
   {
     heading: 'Explore',
@@ -18,6 +26,14 @@ const links = [
   },
 ];
 
+// Map connected labels to routes (update as needed)
+const linkRoutes = {
+  'Movies': '/Movies',
+  'Series': '/Series',
+  'My List': '/my-list',
+  'Watch History': '/History',
+};
+
 const icons = [FaFacebookF, FaTwitter, FaInstagram, FaYoutube];
 
 export default function Footer() {
@@ -28,14 +44,18 @@ export default function Footer() {
         <div className="max-w-sm">
           <div className="flex items-center gap-2 mb-4">
             <MdOutlineOndemandVideo className="text-pink-500 text-3xl" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-400 to-purple-500 bg-clip-text text-transparent">Cinemaze</h1>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-400 to-purple-500 bg-clip-text text-transparent">
+              Cinemaze
+            </h1>
           </div>
           <p className="mb-6 text-sm leading-relaxed">
             Your destination for discovering and enjoying the best movies and shows in a sleek, immersive experience.
           </p>
           <div className="flex gap-4 text-xl">
             {icons.map((Icon, i) => (
-              <Icon key={i} className="hover:text-cyan-400 cursor-pointer" />
+              <a href="#" key={i}>
+                <Icon className="hover:text-cyan-400 cursor-pointer" />
+              </a>
             ))}
           </div>
         </div>
@@ -45,9 +65,22 @@ export default function Footer() {
             <div key={idx}>
               <h2 className="text-white font-semibold mb-4 text-lg">{section.heading}</h2>
               <ul className="space-y-2 text-sm">
-                {section.items.map((text, i) => (
-                  <li key={i} className="hover:text-pink-500 cursor-pointer">{text}</li>
-                ))}
+                {section.items.map((text, i) =>
+                  connectedLinks.includes(text) ? (
+                    <li key={i}>
+                      <a
+                        href={linkRoutes[text]}
+                        className="hover:text-pink-500 cursor-pointer"
+                      >
+                        {text}
+                      </a>
+                    </li>
+                  ) : (
+                    <li key={i} className="text-gray-500 cursor-default">
+                      {text}
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           ))}
